@@ -2,7 +2,15 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
+
+def add_temp(name, temperature, device_name, dt=None, commit=False):
+    dt = dt or datetime.now()
+    temp = Temp(name, temperature, device_name, dt )
+    db_session.add(temp) 
+    if commit:
+        db_session.commit()
 
 engine = create_engine('sqlite:///weather.sqlite')
 

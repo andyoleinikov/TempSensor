@@ -1,4 +1,6 @@
 from flask import Flask, abort, request, render_template
+from tdb import Temp, db_session, add_temp
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -18,6 +20,10 @@ def temp_reciever():
         device_name = request.form.get('device_name')
         print(temperature_recieved)
         print(device_name)
+
+
+        add_temp("Zapolitsy", float(temperature_recieved), device_name, commit=True)
+
         return render_template('temperature.html', device_name = device_name, temperature_recieved = temperature_recieved)
     else:
         print('wrong key')
@@ -26,3 +32,4 @@ def temp_reciever():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port = 80 )
+

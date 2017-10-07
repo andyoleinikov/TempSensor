@@ -1,10 +1,15 @@
 from bs4 import BeautifulSoup
 from req import get_html
 from datetime import date
-from tdb import Temp, db_session
+from tdb import Temp, db_session, add_temp
 import time
 
+
 # сделать через dateutil and datetime
+def t_from_text(text):
+        return float(text.replace('+', ''))
+
+
 
 for year in range(2014, 2018):
     for month in  range(1,13):
@@ -27,21 +32,12 @@ for year in range(2014, 2018):
             actual_date = date(year, month, int(day.text))
             morning , evening, *_ = temp
             try:
-                if "+" in evening.text:
-                    evening.text.replace('+', '')            
-                day_temp = Temp("Zapolitsy", float(evening.text), "gismeteo", actual_date)
-                db_session.add(day_temp)  
+                add_temp("Zapolitsy", t_from_text(evening.text), "gismeteo", actual_date)          
             except ValueError as e:
-                if "+" in morning.text:
-                    morning.text.replace('+', '')            
-                day_temp = Temp("Zapolitsy", float(morning.text), "gismeteo", actual_date)
-                db_session.add(day_temp)  
+                add_temp("Zapolitsy", t_from_text(morning.text), "gismeteo", actual_date)          
+
         print('month ok' + str(month))      
     db_session.commit()
     print('year ok' + str(year))  
     time.sleep(5) 
 
-# db_session.commit()
-# print(data[100])
-# print(data[500])
-# print(data[700])
