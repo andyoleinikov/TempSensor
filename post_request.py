@@ -8,7 +8,7 @@ while True:
     API_ENDPOINT = "http://10.56.5.109/temp/" 
     data = {
         'key': '1234',
-        'device_name': 'RPI_sensor', 
+        'source': 'RPI_sensor', 
         'temperature_recieved': input_temp
     }
     r = requests.post(url = API_ENDPOINT, data = data)

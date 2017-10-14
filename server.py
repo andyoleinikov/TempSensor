@@ -1,6 +1,7 @@
 from flask import Flask, abort, request, render_template
 from tdb import Temp, db_session, add_temp
 from datetime import datetime
+from graph_plotter_easy import plot_html
 
 app = Flask(__name__)
 
@@ -10,21 +11,22 @@ def index():
 
 @app.route('/test/')
 def all_news():
-    return render_template('test_case.html')
+        return plot_html
+
 
 @app.route('/temp/', methods=['POST'])
 def temp_reciever():
     secret_key = request.form.get('key')
     if secret_key == '1234':
         temperature_recieved = request.form.get('temperature_recieved')
-        device_name = request.form.get('device_name')
+        source = request.form.get('source')
         print(temperature_recieved)
-        print(device_name)
+        print(source)
 
 
-        add_temp("Zapolitsy", float(temperature_recieved), device_name, commit=True)
+        add_temp("Zapolitsy", float(temperature_recieved), source, commit=True)
 
-        return render_template('temperature.html', device_name = device_name, temperature_recieved = temperature_recieved)
+        return render_template('temperature.html', source = source, temperature_recieved = temperature_recieved)
     else:
         print('wrong key')
         return 
