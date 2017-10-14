@@ -30,7 +30,7 @@ def temp_reciever():
         print(source)
 
 
-        add_temp("Zapolitsy", float(temperature_recieved), source, commit=True)
+        add_temp("Zapolitsy", float(temperature_recieved), source=source, commit=True)
 
         return render_template('temperature.html', source = source, temperature_recieved = temperature_recieved)
     else:

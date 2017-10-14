@@ -1,7 +1,8 @@
-import mpld3
-from mpld3 import plugins
 
 import matplotlib as mpl
+mpl.use('Agg')
+from mpld3 import plugins
+import mpld3
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.ticker import FuncFormatter
@@ -11,7 +12,6 @@ import matplotlib.font_manager as fm
 from tdb import get_item_range
 import datetime as dt 
 from dateutil import rrule
-
 
 
 
