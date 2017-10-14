@@ -1,7 +1,7 @@
 from flask import Flask, abort, request, render_template
 from tdb import Temp, db_session, add_temp
 from datetime import datetime
-from graph_plotter_easy import plot_html
+from graph_plotter_easy import get_plot_html
 
 app = Flask(__name__)
 
@@ -11,7 +11,13 @@ def index():
 
 @app.route('/test/')
 def all_news():
-        return plot_html
+    source = request.args.get('source', 'Test')
+    req_date = request.args.get('date', 'now')
+    if req_date == 'now': 
+        return get_plot_html(source=source, date=datetime.now())
+    else:
+        req_date = datetime.strptime(req_date, '%Y-%m-%d')
+        return get_plot_html(source=source, date =req_date)
 
 
 @app.route('/temp/', methods=['POST'])
@@ -33,5 +39,5 @@ def temp_reciever():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port = 80 )
+    app.run(host='127.0.0.1', port = 5000 , debug=True)
 

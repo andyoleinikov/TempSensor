@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, load_only
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
+import datetime as dt
 
 
 def add_temp(location_name, temperature, source, dt=None, commit=False):
@@ -12,12 +12,21 @@ def add_temp(location_name, temperature, source, dt=None, commit=False):
     if commit:
         db_session.commit()
 
-def get_t_range(source='gismeteo', date_range=datetime(2016, 10, 7, 00, 00, 00, 000000)):
-    t_range = []
-    for date in date_range:
-        this_temp = Temp.query.filter(Temp.source == source, Temp.date == date).options(load_only('date', 'temperature')).first().temperature
-        t_range.append(this_temp) 
-    return t_range
+def get_item_range(item='temperature', source='gismeteo', date=dt.datetime(2016, 10, 7, 00, 00, 00, 000000)):
+    date_from = date - dt.timedelta(days = 5)
+    date_to = date + dt.timedelta(days = 5)
+    db_range = Temp.query.filter(
+        Temp.source == source,
+        Temp.date > date_from,
+        Temp.date <= date_to,
+    ).options(load_only(item)).order_by(
+        Temp.date
+    ).all()
+    item_range = []
+    for date in db_range:
+        item_range.append(getattr(date, item))
+    print(item_range)
+    return item_range
 
 engine = create_engine('sqlite:///weather.sqlite')
 
