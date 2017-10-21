@@ -3,6 +3,7 @@ from tdb import Temp, db_session, add_temp
 from datetime import datetime
 from graph_plotter_easy import get_plot_html
 
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,14 +11,18 @@ def index():
     return render_template('index.html')
 
 @app.route('/test/')
-def all_news():
-    source = request.args.get('source', 'Test')
+def plot_graph():
+    source = request.args.get('source', 'gismeteo')
     req_date = request.args.get('date', 'now')
+    # return render_template('test_case.html')
     if req_date == 'now': 
         return get_plot_html(source=source, date=datetime.now())
     else:
         req_date = datetime.strptime(req_date, '%Y-%m-%d')
-        return get_plot_html(source=source, date =req_date)
+        plot_html = get_plot_html(source=source, date =req_date)
+        print(plot_html) 
+        return render_template('test_case.html', plot_html=plot_html)
+
 
 
 @app.route('/temp/', methods=['POST'])

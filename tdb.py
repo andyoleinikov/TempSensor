@@ -6,10 +6,12 @@ import datetime  as dt
 
 
 
-def add_temp(location_name, temperature, source, date=dt.datetime.now(), commit=False):
-    temp = Temp(location_name, temperature, source, date )
-    print(date)
-    print(temp)
+def add_temp(location_name, temperature, source, date=None, commit=False):
+    if date:
+        temp = Temp(location_name, temperature, source, date )
+    else:
+        date = dt.datetime.now()
+        temp = Temp(location_name, temperature, source, date )
     db_session.add(temp) 
     if commit:
         db_session.commit()
