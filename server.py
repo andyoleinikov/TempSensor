@@ -31,11 +31,12 @@ def temp_reciever():
     if secret_key == '1234':
         temperature_recieved = request.form.get('temperature_recieved')
         source = request.form.get('source')
+        date = request.form.get('date')
         print(temperature_recieved)
         print(source)
 
 
-        add_temp("Zapolitsy", float(temperature_recieved), source=source, commit=True)
+        add_temp("Zapolitsy", float(temperature_recieved), source=source, date = date, commit=True)
 
         return render_template('temperature.html', source = source, temperature_recieved = temperature_recieved)
     else:

@@ -20,8 +20,6 @@ from dateutil import rrule
 def get_plot_html(source='gismeteo', date=dt.datetime(2016, 10, 7, 00, 00, 00, 000000)):
     date_range = get_item_range(item='date', source= source, date=date)
     t_range = get_item_range(item='temperature', source= source, date=date)
-    date_range1 = get_item_range(item='date', source= source, date=date - dt.timedelta(days = 365))
-    t_range1 = get_item_range(item='temperature', source= source, date=date- dt.timedelta(days = 365))
     print(date_range)
     print(t_range)
     fig, ax = plt.subplots()
