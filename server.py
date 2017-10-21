@@ -20,7 +20,6 @@ def plot_graph():
     else:
         req_date = datetime.strptime(req_date, '%Y-%m-%d')
         plot_html = get_plot_html(source=source, date =req_date)
-        print(plot_html) 
         return render_template('test_case.html', plot_html=plot_html)
 
 
