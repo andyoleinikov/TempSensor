@@ -30,9 +30,10 @@ def temp_reciever():
     if secret_key == '1234':
         temperature_recieved = request.form.get('temperature_recieved')
         source = request.form.get('source')
-        date = request.form.get('date')
+        date_recieved = datetime.strptime( request.form.get('date'), '%Y %m %d %H:%M')
         print(temperature_recieved)
-        print(source)
+        print(source, '  date recieved ',date_recieved )
+        date = date_recieved #.strftime('%Y $m $d %H %M')
 
 
         add_temp("Zapolitsy", float(temperature_recieved), source=source, date = date, commit=True)
