@@ -25,7 +25,6 @@ def get_plot_html(source='gismeteo', date=dt.datetime(2016, 10, 7, 00, 00, 00, 0
     fig, ax = plt.subplots()
 
     ax.plot_date(date_range, t_range, '-b')
-    ax.plot_date(date_range1, t_range1, '-r')
 
     ax.xaxis.set_major_locator(mdates.DayLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
