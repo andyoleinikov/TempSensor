@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from req import get_html
-from datetime import date
+from datetime import datetime
 from tdb import Temp, db_session, add_temp
 import time
 
@@ -27,14 +27,20 @@ for year in range(2014, 2018):
         for item in items:
             day = item.find('td', class_='first')
             temp = item.find_all('td', class_='first_in_group')
-            if not date or len(temp) < 2:
+            if not day or len(temp) < 2:
                 continue
-            actual_date = date(year, month, int(day.text))
-            morning , evening, *_ = temp
-            try:
-                add_temp("Zapolitsy", t_from_text(evening.text), "gismeteo", actual_date)          
-            except ValueError as e:
-                add_temp("Zapolitsy", t_from_text(morning.text), "gismeteo", actual_date)          
+            actual_date_morning = datetime(year, month, int(day.text), 6)
+            actual_date_evening = datetime(year, month, int(day.text), 21)
+            morning, evening, *_ = temp
+            if morning.text: 
+                add_temp("Zapolitsy", t_from_text(morning.text), "gismeteo", actual_date_morning)   
+            else:
+                continue
+
+            if evening.text: 
+                add_temp("Zapolitsy", t_from_text(evening.text), "gismeteo", actual_date_evening)   
+            else:
+                continue
 
         print('month ok' + str(month))      
     db_session.commit()

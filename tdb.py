@@ -16,9 +16,10 @@ def add_temp(location_name, temperature, source, date=None, commit=False):
     if commit:
         db_session.commit()
 
-def get_item_range(item='temperature', source='gismeteo', date=dt.datetime(2016, 10, 7, 00, 00, 00, 000000)):
-    date_from = date - dt.timedelta(days = 5)
-    date_to = date + dt.timedelta(days = 5)
+def get_item_range(item='temperature', source='gismeteo',
+        date=dt.datetime(2016, 10, 7), shift=dt.timedelta(days=7)):
+    date_from = date - shift
+    date_to = date + shift
     db_range = Temp.query.filter(
         Temp.source == source,
         Temp.date > date_from,
@@ -29,7 +30,6 @@ def get_item_range(item='temperature', source='gismeteo', date=dt.datetime(2016,
     item_range = []
     for date in db_range:
         item_range.append(getattr(date, item))
-    print(item_range)
     return item_range
 
 engine = create_engine('sqlite:///weather.sqlite')
