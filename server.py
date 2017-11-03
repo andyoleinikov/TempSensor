@@ -10,9 +10,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/test/')
+@app.route('/graph/')
 def plot_graph():
-    source = request.args.get('source', 'gismeteo')
     req_date = request.args.get('date', None)
     if req_date: 
         req_date = datetime.strptime('2017-'+req_date, '%Y-%m-%d')
@@ -23,6 +22,17 @@ def plot_graph():
         plot_html = get_plot(date =req_date, output='html')
         return render_template('test_case.html', plot_html=plot_html)
 
+@app.route('/graph_ajax/')
+def plot_graph_ajax():
+    req_date = request.args.get('date', None)
+    if req_date: 
+        req_date = datetime.strptime('2017-'+req_date, '%Y-%m-%d')
+        plot_html = get_plot(date =req_date, output='html')
+        return plot_html
+    else:
+        req_date = datetime.now()
+        plot_html = get_plot(date =req_date, output='html')
+        return plot_html
 
 
 @app.route('/temp/', methods=['POST'])

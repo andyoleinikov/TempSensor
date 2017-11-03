@@ -14,9 +14,29 @@
       $( "#datepicker" ).datepicker({
           dateFormat: 'mm-dd'
         });
-      // $( "#datepicker" ).datepicker().formatDate("mm dd");
     } );
     </script>
+
+    <script type="text/javascript">
+        $(function() {
+          $('form.contactForm1').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+            var form = $(this);
+            $.ajax({
+              type: form.attr('method'),
+              url: form.attr('action'),
+              data: form.serialize()
+            }).done(function(data) {
+              $("#fig01").html(data);
+              console.log("okk")
+            }).fail(function(data) {
+              console.log("lohh")
+            });
+          });
+        });
+    </script>
+
+
     <link rel="stylesheet" type="text/css" href="/static/app.css">
 </head>
 <body>
@@ -40,7 +60,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <form action="/test" method="GET" class="navbar-form navbar-left" >
+      <form action="/graph_ajax/" method="GET" class="navbar-form navbar-left contactForm1" >
         <div class="form-group">
           <input name="date" id="datepicker" type="text" placeholder="10-10">
         </div>

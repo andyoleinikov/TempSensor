@@ -9,11 +9,11 @@ import time
 def t_from_text(text):
         return float(text.replace('+', ''))
 
-
+zapolitsy = 168669
 
 for year in range(2014, 2018):
     for month in  range(1,13):
-        html = get_html("https://www.gismeteo.ru/diary/168669/%s/%s/" % (year, month))
+        html = get_html("https://www.gismeteo.ru/diary/%s/%s/%s/" % (zapolitsy, year, month))
         if html == False:
             print('no more data')
             break
