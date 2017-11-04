@@ -10,29 +10,26 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/about/')
+def index():
+    return render_template('about.html')
+
+@app.route('/contacts')
+def index():
+    return render_template('contacts.html')
+
 @app.route('/graph/')
 def plot_graph():
-    req_date = request.args.get('date', None)
-    if req_date: 
-        req_date = datetime.strptime('2017-'+req_date, '%Y-%m-%d')
-        plot_html = get_plot(date =req_date, output='html')
-        return render_template('test_case.html', plot_html=plot_html)
-    else:
-        req_date = datetime.now()
-        plot_html = get_plot(date =req_date, output='html')
-        return render_template('test_case.html', plot_html=plot_html)
+    tempage = 'test_case_graph.html' if request.is_xhr else 'test_case.html'
 
-@app.route('/graph_ajax/')
-def plot_graph_ajax():
     req_date = request.args.get('date', None)
     if req_date: 
         req_date = datetime.strptime('2017-'+req_date, '%Y-%m-%d')
-        plot_html = get_plot(date =req_date, output='html')
-        return plot_html
     else:
         req_date = datetime.now()
-        plot_html = get_plot(date =req_date, output='html')
-        return plot_html
+
+    plot_html = get_plot(date=req_date, output='html')
+    return render_template(tempage, plot_html=plot_html)
 
 
 @app.route('/temp/', methods=['POST'])

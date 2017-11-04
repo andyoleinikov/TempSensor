@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -19,7 +19,7 @@
 
     <script type="text/javascript">
         $(function() {
-          $('form.contactForm1').submit(function(event) {
+          $('form.dateForm1').submit(function(event) {
             event.preventDefault(); // Prevent the form from submitting via the browser
             var form = $(this);
             $.ajax({
@@ -27,7 +27,7 @@
               url: form.attr('action'),
               data: form.serialize()
             }).done(function(data) {
-              $("#fig01").html(data);
+              $("div.content").html(data);
               console.log("okk")
             }).fail(function(data) {
               console.log("lohh")
@@ -39,6 +39,8 @@
 
     <link rel="stylesheet" type="text/css" href="/static/app.css">
 </head>
+
+
 <body>
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="http://mpld3.github.io/js/mpld3.v0.1.js"></script>
@@ -54,23 +56,22 @@
       </button>
       <a class="navbar-brand" href="#">Temperature Graph</a>
     </div>
+
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/">Home</a></li>
+        <li class="active"><a href="/graph/">Graph</a></li>        
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contacts/">Contacts</a></li>
       </ul>
-      <form action="/graph_ajax/" method="GET" class="navbar-form navbar-left contactForm1" >
+      <form action="/graph/" method="GET" class="navbar-form navbar-right dateForm1" >
         <div class="form-group">
           <input name="date" id="datepicker" type="text" placeholder="10-10">
         </div>
         <input type="submit" value="Set date"/>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Signup  <i class="fa fa-user-plus"></i></a></li>
-        <li><a href="#about">Login  <i class="fa fa-user"></i></a></li>
-      </ul>
     </div>
+
   </div>
  </nav>
 
@@ -80,7 +81,7 @@
     <div class="row">
         <div class="col-lg-12" >
             <div class="content">
-                <div id="fig01">{{plot_html|safe}} </div>
+              {% include "test_case_graph.html" %}
             </div>
         </div>
     </div>

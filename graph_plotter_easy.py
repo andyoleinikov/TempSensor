@@ -49,8 +49,10 @@ def plot_grid(fig, ax):
     ax.grid(True)
 
 
-def get_plot(date=dt.datetime.now(), output='html'):
+def get_plot(date=None, output='html'):
     
+    date = date or dt.datetime.now() 
+
     fig, ax = plt.subplots(figsize=(10, 4))
 
     plot_db_data(ax, date)

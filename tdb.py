@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Floa
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, load_only
 from sqlalchemy.ext.declarative import declarative_base
 import datetime  as dt
+import settings
 
 
 
@@ -32,7 +33,7 @@ def get_item_range(item='temperature', source='gismeteo',
         item_range.append(getattr(date, item))
     return item_range
 
-engine = create_engine('sqlite:///weather.sqlite')
+engine = create_engine(settings.DB_CONNECT)
 
 db_session = scoped_session(sessionmaker(bind=engine))
 
