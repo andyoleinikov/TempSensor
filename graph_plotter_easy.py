@@ -4,8 +4,6 @@ from mpld3 import plugins
 import mpld3
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from matplotlib.ticker import FuncFormatter
-import matplotlib.font_manager as fm
 import datetime as dt 
 from dateutil.relativedelta import  relativedelta
 
@@ -74,7 +72,7 @@ def get_plot(date=None, output='html'):
         ax.legend(handles, labels)
         plt.savefig('./static/graph/graph.png')
         plt.close()
-        f = open('./static/graph/graph.png', 'rb')  # some file on local disk
+        f = open('./static/graph/graph.png', 'rb')  
         return f
 
 

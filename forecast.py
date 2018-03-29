@@ -1,8 +1,9 @@
 import requests
 import datetime
+import settings
 
 city_id = 580227
-apikey = '8e8de641e02543d0ff3b189777e0da55'
+apikey = settings.apikey
 
 
 def get_weather_json(url):
